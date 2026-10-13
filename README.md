@@ -1,5 +1,7 @@
 # @deepwhale-cn/dsh-data-scan
 
+[![Listed on dsh-plugin.org](https://dsh-plugin.org/badges/listed.svg)](https://dsh-plugin.org/plugins/feely0208/dsh-data-scan)
+
 **敏感数据发现** —— 扫出代码和配置里的身份证、银行卡、手机号。
 
 **带校验位验证**，不是纯正则。
