@@ -1,0 +1,79 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
+<title>深鲸守护 · 敏感数据发现 · 检查报告</title>
+<style>
+  :root{--bg:#0b1018;--fg:#e6edf6;--muted:#8b9bb4;--line:#1e2a3a;--card:#121a26}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif;padding:32px}
+  .wrap{max-width:1180px;margin:0 auto}
+  h1{font-size:22px;margin:0 0 4px}
+  .sub{color:var(--muted);font-size:13px;margin-bottom:20px}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:20px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .card .k{color:var(--muted);font-size:12px;margin-bottom:6px}
+  .card .v{font-size:20px;font-weight:700}
+  .chip{display:inline-block;padding:3px 10px;border-radius:999px;margin:0 6px 6px 0;font-size:13px;
+        border:1px solid var(--c);color:var(--c)}
+  .chip b{font-size:15px}
+  table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;font-size:13px}
+  th{color:var(--muted);font-weight:500;background:#0e1622}
+  tr:last-child td{border-bottom:0}
+  .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--c);margin-right:6px}
+  .t{font-weight:600;margin-bottom:2px}
+  .src{color:var(--muted);font-size:12px}
+  code{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:#7dd3fc}
+  .ev{color:var(--muted);font-size:12px;margin-top:2px;word-break:break-all}
+  .adv{color:var(--muted);font-size:12px;max-width:260px}
+  .ok{background:#0d2b1a;border:1px solid #1d7a4a;color:#4ade80;padding:16px;border-radius:12px;margin-bottom:20px}
+  .warn{background:#2b1f0d;border:1px solid #a16207;color:#fbbf24;padding:12px 16px;border-radius:12px;margin-bottom:20px;font-size:13px}
+  footer{color:var(--muted);font-size:12px;margin-top:22px;padding-top:14px;border-top:1px solid var(--line)}
+  footer p{margin:3px 0}
+</style></head><body><div class="wrap">
+  <h1>深鲸守护 · 敏感数据发现</h1>
+  <div class="sub">扫出代码和配置里的身份证、银行卡、手机号 —— 带校验位验证，不误报</div>
+
+  <div class="cards">
+    <div class="card"><div class="k">扫描文件</div><div class="v">1</div></div>
+    <div class="card"><div class="k">检查规则</div><div class="v">4<span style="font-size:13px;color:var(--muted)">/4</span></div></div>
+    <div class="card"><div class="k">命中</div><div class="v" style="color:#ea580c">4</div></div>
+    <div class="card"><div class="k">已跳过目录</div><div class="v">0</div></div>
+  </div>
+
+  
+  <div class="warn">⚠️ 扫描到的文件很少，请确认扫描目录是否正确 —— <b>不要因「全绿」就放心</b>。</div>
+  
+
+  <div style="margin-bottom:16px"><span class="chip" style="--c:#ea580c">高 <b>2</b></span><span class="chip" style="--c:#ca8a04">中 <b>1</b></span><span class="chip" style="--c:#0891b2">低 <b>1</b></span></div>
+       <table><thead><tr><th>级别</th><th>问题</th><th>位置 / 证据</th><th>建议</th></tr></thead>
+       <tbody>
+      <tr class="sev-high">
+        <td><span class="dot" style="--c:#ea580c"></span>高</td>
+        <td><div class="t">发现身份证号</div><div class="src">《个人信息保护法》第 28 条（敏感个人信息）· GB 11643-1999 公民身份号码（含校验位算法）</div></td>
+        <td><code>userdata.js:5</code><div class="ev">身份证（已打码：1101************2X）</div></td>
+        <td class="adv">身份证号属于<b>敏感个人信息</b>，处理需单独同意并有明确必要性。代码/配置/测试数据里出现它，通常意味着：① 用了真实数据做测试（应换成合成数据）；② 脱敏没做；③ 硬编码了样例。请替换为合成数据，并检查该文件是否已进 git 历史。本工具的输出已打码，不会把原值写进报告。</td>
+      </tr>
+      <tr class="sev-high">
+        <td><span class="dot" style="--c:#ea580c"></span>高</td>
+        <td><div class="t">发现银行卡号</div><div class="src">《个人信息保护法》第 28 条 · 银行卡号通过 Luhn 校验（ISO/IEC 7812）</div></td>
+        <td><code>userdata.js:7</code><div class="ev">银行卡（已打码：4532**********66）</div></td>
+        <td class="adv">银行卡号 + 姓名/手机号可组合成可直接盗刷的信息。同样属于敏感个人信息。替换为测试卡号（Luhn 通过但非真实账户）或干脆用占位符。本工具用 Luhn 校验，像卡号的订单号不会误报。</td>
+      </tr>
+      <tr class="sev-medium">
+        <td><span class="dot" style="--c:#ca8a04"></span>中</td>
+        <td><div class="t">发现手机号</div><div class="src">《个人信息保护法》第 4 条（个人信息）· 工信部手机号段分配</div></td>
+        <td><code>userdata.js:6</code><div class="ev">手机号（已打码：1381*****78）</div></td>
+        <td class="adv">手机号是个人信息（未达「敏感」但受保护）。测试数据里常见的虚构号码（如 13800138000）也会命中 —— 若确为虚构，建议改用明显占位（如 138****0000）以免后续扫描持续告警。</td>
+      </tr>
+      <tr class="sev-low">
+        <td><span class="dot" style="--c:#0891b2"></span>低</td>
+        <td><div class="t">发现邮箱地址</div><div class="src">《个人信息保护法》第 4 条（个人信息）</div></td>
+        <td><code>userdata.js:8</code><div class="ev">邮箱（已打码：zhan**************om）</div></td>
+        <td class="adv">邮箱是个人信息，但<b>代码仓库里出现邮箱很常见且往往正当</b>（维护者联系方式、LICENSE 署名、测试夹具）。这条标为「低」，是提示你确认：这批邮箱是不是<b>真实用户数据</b>被带进了仓库。若是，请移除；若只是联系方式，可以忽略。</td>
+      </tr></tbody></table>
+
+  <footer>
+    <p>扫描范围：<code>tests/fixtures/fail/demo-project</code> · 1 个文件</p>
+    <p>规则库：— · 生成时间：2026-10-13 02:19:14</p>
+    <p></p>
+  </footer>
+</div></body></html>

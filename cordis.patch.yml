@@ -1,0 +1,4 @@
+# @deepwhale-cn/dsh-data-scan 的组合层
+- insert:
+    - id: data-scan
+      name: '@deepwhale-cn/dsh-data-scan'
