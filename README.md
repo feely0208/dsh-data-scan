@@ -61,7 +61,7 @@ dsh-data-scan --demo          # 看检出效果
 dsh-data-scan --html r.html   # HTML 报告
 ```
 
-![dsh-data-scan 的检查报告示例](https://raw.githubusercontent.com/feely0208/dsh-data-scan/main/docs/report.png)
+![dsh-data-scan 的检查报告示例](https://www.deepwhale.org.cn/plugin-assets/dsh-data-scan/report.png)
 
 ## 边界
 
