@@ -1,6 +1,7 @@
 #!/bin/bash
 # 双向验证：正例必须报，反例必须不报（误报是安全工具的头号杀手）
 set -uo pipefail
+export PATH="/usr/local/bin:$PATH"
 cd "$(dirname "$0")/.."
 PASS=0; FAIL=0
 ok(){ echo "  ✅ $1"; PASS=$((PASS+1)); }
