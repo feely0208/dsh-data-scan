@@ -3,6 +3,8 @@
 [![Listed on dsh-plugin.org](https://dsh-plugin.org/badges/listed.svg)](https://dsh-plugin.org/plugins/feely0208/dsh-data-scan)
 
 
+**防数据泄露**：扫出代码与配置里的身份证、银行卡、手机号 —— 带校验位验证，不误报。
+
 **关键词**：敏感数据 · 个人信息 · 身份证号 · 银行卡号 · 手机号 · 数据泄露 · 隐私数据 · 个人信息保护法 · PII
 **Keywords**: sensitive data · PII · personal information · ID card · bank card · phone number · data leak
 **敏感数据发现** —— 扫出代码和配置里的身份证、银行卡、手机号。
