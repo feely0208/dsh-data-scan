@@ -73,7 +73,7 @@ dsh-data-scan --html r.html   # HTML 报告
 
 - **不扫二进制/图片** —— 截图里的身份证、PDF 里的表格扫不到。
 - **不查 .git 历史** —— 只看到当前工作区，已提交过的需另做历史清理。
-- 与 [dsh-secret-scan](https://github.com/feely0208/dsh-cn-skills) **不重叠**：那个查密钥，这个查个人信息。
+- 与 [dsh-bundle-cn-skills](https://github.com/feely0208/dsh-bundle-cn-skills) **不重叠**：那个查密钥，这个查个人信息。
 
 本插件是一个工具。使用者必须遵守所在地区法律法规，**对使用本项目造成的任何后果自行承担责任。**
 
